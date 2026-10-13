@@ -12,8 +12,9 @@ prerequisite for a live-data check.
 - An available authenticated E-Tariff API implementing the transactions
   contract. The API must resolve SIMcloud credentials server-side for the
   current user.
-- A valid user session and a configured public API base URL. Do not put a
-  SIMcloud token or other secret in a `NEXT_PUBLIC_` variable.
+- A valid user session. The frontend uses
+  `https://e-tarrif-be.onrender.com/api` by default. Do not put a SIMcloud token
+  or other secret in a `NEXT_PUBLIC_` variable.
 
 ## Configure and run
 
@@ -23,10 +24,11 @@ prerequisite for a live-data check.
    yarn install
    ```
 
-2. Configure the frontend API base URL in an ignored local environment file:
+2. Optionally override the frontend API base URL in an ignored local
+   environment file when testing against another deployment:
 
    ```dotenv
-   NEXT_PUBLIC_API_BASE_URL=https://your-authenticated-api.example/api/v1
+   NEXT_PUBLIC_API_BASE_URL=https://your-api.example/api
    ```
 
    Configure the user's existing login/session by the application's established

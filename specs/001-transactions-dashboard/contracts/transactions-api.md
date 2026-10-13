@@ -8,12 +8,12 @@ credential to the browser.
 
 ## Request
 
-`GET {NEXT_PUBLIC_API_BASE_URL}/transactions`
+`GET https://e-tarrif-be.onrender.com/api/transactions`
 
-The API base URL is the versioned backend base (for example,
-`https://api.example.test/api/v1`). The frontend uses the application's
-established authenticated session; the auth mechanism is owned by the backend
-integration.
+The frontend uses this endpoint by default. `NEXT_PUBLIC_API_BASE_URL` may
+override the base URL for another deployment; it should end in `/api` for this
+route. The frontend uses the application's established authenticated session;
+the auth mechanism is owned by the backend integration.
 
 | Query parameter | Required | Description |
 |---|---:|---|

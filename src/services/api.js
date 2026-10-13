@@ -3,6 +3,7 @@ const DEFAULT_MESSAGES = {
   401: "Please sign in again to view your transactions.",
   403: "We could not verify access to your connected transaction account.",
 };
+const DEFAULT_API_BASE_URL = "https://e-tarrif-be.onrender.com/api";
 
 export class ApiError extends Error {
   constructor(status, code, message) {
@@ -14,14 +15,8 @@ export class ApiError extends Error {
 }
 
 function buildUrl(path, query) {
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.trim();
-  if (!baseUrl) {
-    throw new ApiError(
-      0,
-      "API_CONFIGURATION",
-      "The transactions service is not configured.",
-    );
-  }
+  const baseUrl =
+    process.env.NEXT_PUBLIC_API_BASE_URL?.trim() || DEFAULT_API_BASE_URL;
 
   let url;
   try {

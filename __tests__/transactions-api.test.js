@@ -52,6 +52,21 @@ describe("transaction request construction", () => {
     });
   });
 
+  test("serializes multiple services using the transactions endpoint parameters", () => {
+    expect(
+      buildTransactionParams({
+        dateFrom: "2026-07-01",
+        dateTo: "2026-07-31",
+        services: ["data", "airtime"],
+      }),
+    ).toEqual({
+      date_from: "2026-07-01",
+      date_to: "2026-07-31",
+      type: "airtime,data",
+      limit: 50,
+    });
+  });
+
   test("calls the versioned transactions route using the shared fetch wrapper", async () => {
     process.env.NEXT_PUBLIC_API_BASE_URL = "https://api.example.test/api/v1";
     const signal = new AbortController().signal;
@@ -132,8 +147,25 @@ describe("apiFetch", () => {
     await expect(apiFetch("transactions")).rejects.toBe(abortError);
   });
 
-  test("reports a missing API base URL explicitly", async () => {
+  test("uses the configured transactions API endpoint when no override is set", async () => {
     delete process.env.NEXT_PUBLIC_API_BASE_URL;
-    await expect(apiFetch("transactions")).rejects.toBeInstanceOf(ApiError);
+    const fetchMock = jest.spyOn(global, "fetch").mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => payload,
+    });
+
+    await apiFetch("transactions", {
+      query: {
+        date_from: "2026-07-01",
+        date_to: "2026-07-31",
+        type: "airtime,data",
+        limit: 50,
+      },
+    });
+
+    expect(fetchMock.mock.calls[0][0].toString()).toBe(
+      "https://e-tarrif-be.onrender.com/api/transactions?date_from=2026-07-01&date_to=2026-07-31&type=airtime%2Cdata&limit=50",
+    );
   });
 });
