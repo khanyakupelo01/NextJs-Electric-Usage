@@ -3,7 +3,7 @@ const DEFAULT_MESSAGES = {
   401: "Please sign in again to view your transactions.",
   403: "We could not verify access to your connected transaction account.",
 };
-const DEFAULT_API_BASE_URL = "https://e-tarrif-be.onrender.com/api";
+const DEFAULT_API_BASE_URL = "/api";
 
 export class ApiError extends Error {
   constructor(status, code, message) {
@@ -20,9 +20,11 @@ function buildUrl(path, query) {
 
   let url;
   try {
+    const origin =
+      typeof window === "undefined" ? "http://localhost" : window.location.origin;
     url = new URL(
       path.replace(/^\/+/, ""),
-      `${baseUrl.replace(/\/+$/, "")}/`,
+      new URL(`${baseUrl.replace(/\/+$/, "")}/`, origin),
     );
   } catch {
     throw new ApiError(

@@ -165,7 +165,7 @@ describe("apiFetch", () => {
     });
 
     expect(fetchMock.mock.calls[0][0].toString()).toBe(
-      "https://e-tarrif-be.onrender.com/api/transactions?date_from=2026-07-01&date_to=2026-07-31&type=airtime%2Cdata&limit=50",
+      `${window.location.origin}/api/transactions?date_from=2026-07-01&date_to=2026-07-31&type=airtime%2Cdata&limit=50`,
     );
   });
 });
