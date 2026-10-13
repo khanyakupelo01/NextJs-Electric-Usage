@@ -1,3 +1,5 @@
+export const SESSION_USER_KEY = "session";
+
 export function getStableUserId(userId) {
   if (typeof userId === "string" && userId.trim()) {
     return userId.trim();
@@ -8,4 +10,8 @@ export function getStableUserId(userId) {
   }
 
   return null;
+}
+
+export function getQueryUserId(userId) {
+  return getStableUserId(userId) ?? SESSION_USER_KEY;
 }

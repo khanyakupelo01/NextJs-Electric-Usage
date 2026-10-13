@@ -9,12 +9,12 @@ import {
   getUniqueTransactions,
   useTransactions,
 } from "@/features/transactions/hooks/useTransactions";
-import { getStableUserId } from "@/features/transactions/userIdentity";
+import { getQueryUserId } from "@/features/transactions/userIdentity";
 
 const INITIAL_FILTERS = { dateFrom: "", dateTo: "", services: [] };
 
 export default function TransactionsDashboard({ userId }) {
-  const stableUserId = getStableUserId(userId);
+  const stableUserId = getQueryUserId(userId);
   const [draftFilters, setDraftFilters] = useState(INITIAL_FILTERS);
   const [activeFilters, setActiveFilters] = useState(null);
   const [showValidation, setShowValidation] = useState(false);

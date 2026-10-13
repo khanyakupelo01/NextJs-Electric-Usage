@@ -3,7 +3,7 @@ import {
   getDateRangeError,
   normalizeServices,
 } from "@/features/transactions/filters";
-import { getStableUserId } from "@/features/transactions/userIdentity";
+import { getQueryUserId } from "@/features/transactions/userIdentity";
 import { fetchTransactions } from "@/services/transactions";
 
 export function getUniqueTransactions(pages = []) {
@@ -21,7 +21,7 @@ export function getUniqueTransactions(pages = []) {
 }
 
 export function getTransactionsQueryKey(filters, userId) {
-  const stableUserId = getStableUserId(userId);
+  const stableUserId = getQueryUserId(userId);
   if (!filters) {
     return ["transactions", stableUserId, "unapplied"];
   }
@@ -36,7 +36,7 @@ export function getTransactionsQueryKey(filters, userId) {
 }
 
 export function useTransactions(filters, userId) {
-  const stableUserId = getStableUserId(userId);
+  const stableUserId = getQueryUserId(userId);
   const normalizedFilters = filters
     ? { ...filters, services: normalizeServices(filters.services) }
     : null;
